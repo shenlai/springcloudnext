@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.store.dao.ProductDao">
+    <select id="queryProductList" resultType="com.sl.store.entity.Product">
+        select * from
+        tb_product
+        <where>
+            <if test="productCondition!=null and productCondition.shopId!=null">
+                and shop_id = #{productCondition.shopId}
+            </if>
+        </where>
+        order by
+        priority DESC
+        limit #{rowIndex},#{pageSize}
+    </select>
+
+    <select id="queryProductCount" resultType="int">
+        select
+        count(1)
+        from tb_product
+        <where>
+            <if test="productCondition!=null and productCondition.productId!=null">
+                and shop_id = #{productCondition.shopId}
+            </if>
+        </where>
+        <!-- 等等其他条件 -->
+    </select>
+
+</mapper>
